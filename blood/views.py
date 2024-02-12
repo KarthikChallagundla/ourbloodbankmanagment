@@ -4,3 +4,5 @@ from django.template import loader
 
 # Create your views here.
 
+def home_view(request):
+    return render(request, 'blood/index.html')
