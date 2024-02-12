@@ -6,3 +6,6 @@ from django.template import loader
 
 def home_view(request):
     return render(request, 'blood/index.html')
+
+def admin_login(request):
+    return render(request, 'blood/adminlogin.html')

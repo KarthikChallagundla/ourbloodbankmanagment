@@ -23,5 +23,6 @@ urlpatterns = [
     path('donor/', include('donor.urls')),
     path('patient/', include('patient.urls')),
 
-    path('', views.home_view, name='home')
+    path('', views.home_view, name='home'),
+    path('adminlogin/', views.admin_login, name='adminlogin'),
 ]
