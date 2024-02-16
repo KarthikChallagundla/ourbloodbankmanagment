@@ -2,6 +2,7 @@ from django.shortcuts import render
 from . import forms, models
 from django.contrib.auth.models import Group
 from django.http import HttpResponseRedirect
+from blood import models as bmodels
 
 # Create your views here.
 
@@ -31,5 +32,15 @@ def patient_signup_view(request):
             patient.save()
             my_patient_group = Group.objects.get_or_create(name='PATIENT')
             my_patient_group[0].user_set.add(user)
-        return HttpResponseRedirect('patientlogin')
+        return HttpResponseRedirect('../patientlogin')
     return render(request, 'patient/patientsignup.html', context=mydict)
+
+def patient_dashboard_view(request):
+    patient= models.Patient.objects.get(user_id=request.user.id)
+    dict={
+        'requestpending': bmodels.BloodRequest.objects.all().filter(request_by_patient=patient).filter(status='Pending').count(),
+        'requestapproved': bmodels.BloodRequest.objects.all().filter(request_by_patient=patient).filter(status='Approved').count(),
+        'requestmade': bmodels.BloodRequest.objects.all().filter(request_by_patient=patient).count(),
+        'requestrejected': bmodels.BloodRequest.objects.all().filter(request_by_patient=patient).filter(status='Rejected').count(),
+    }
+    return render(request,'patient/patient_dashboard.html',context=dict)

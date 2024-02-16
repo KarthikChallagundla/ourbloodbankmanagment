@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from blood import views
+from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,4 +26,7 @@ urlpatterns = [
 
     path('', views.home_view, name='home'),
     path('adminlogin/', views.admin_login, name='adminlogin'),
+    path('logout', LogoutView.as_view(template_name='blood/logout.html'),name='logout'),
+
+    path('afterlogin', views.afterlogin_view,name='afterlogin'),
 ]
