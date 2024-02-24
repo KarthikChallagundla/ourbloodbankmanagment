@@ -4,10 +4,10 @@ from . import models
 
 class BloodForm(forms.ModelForm):
     class Meta:
-        models=models.Stock
+        model=models.Stock
         fields=['bloodgroup','unit']
 
 class RequestForm(forms.ModelForm):
     class Meta:
-        models=models.BloodRequest
+        model=models.BloodRequest
         fields=['patient_name','patient_age','reason','bloodgroup','unit']

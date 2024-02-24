@@ -3,6 +3,7 @@ from . import forms, models
 from django.contrib.auth.models import Group
 from django.http import HttpResponseRedirect
 from blood import models as bmodels
+from blood import forms as bforms
 
 # Create your views here.
 
@@ -44,3 +45,22 @@ def patient_dashboard_view(request):
         'requestrejected': bmodels.BloodRequest.objects.all().filter(request_by_patient=patient).filter(status='Rejected').count(),
     }
     return render(request,'patient/patient_dashboard.html',context=dict)
+
+def make_request_view(request):
+    request_form = bforms.RequestForm()
+    mydict={'request_form' : request_form}
+    if request.method == 'POST': 
+        request_form = bforms.RequestForm(request.POST)
+        if request_form.is_valid():
+            blood_request=request_form.save(commit=False)
+            blood_request.bloodgroup=request_form.cleaned_data['bloodgroup']
+            patient=models.Patient.objects.get(user_id=request.user.id)
+            blood_request.request_by_patient=patient
+            blood_request.save()
+            return HttpResponseRedirect('../my-request')
+    return render(request,'patient/makerequest.html', context=mydict)
+
+def my_request_view(request):
+    patient= models.Patient.objects.get(user_id=request.user.id)
+    blood_request=bmodels.BloodRequest.objects.all().filter(request_by_patient=patient)
+    return render(request,'patient/my_request.html',{'blood_request':blood_request})

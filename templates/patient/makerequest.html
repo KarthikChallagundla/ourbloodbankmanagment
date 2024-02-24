@@ -1,6 +1,5 @@
 {% extends 'patient/patientbase.html' %}
 {% block content %}
-{% load widget_tweaks %}
 {%load static%}
 <head>
         <!-- Font special for pages-->
@@ -25,7 +24,7 @@
                         <div class="name">Patient Name</div>
                         <div class="value">
                             <div class="input-group">
-                                {% render_field request_form.patient_name|attr:'required:true'  class="input--style-5"  %}
+                                <input type="text" name="patient_name" id="id_patient_name" required class="input--style-5">
                             </div>
                         </div>
                     </div>
@@ -34,7 +33,7 @@
                         <div class="name">Patient Age</div>
                         <div class="value">
                             <div class="input-group">
-                                {% render_field request_form.patient_age|attr:'required:true'  class="input--style-5"  %}
+                                <input type="text" name="patient_age" id="id_patient_age" required class="input--style-5">
                             </div>
                         </div>
                     </div>
@@ -43,7 +42,7 @@
                         <div class="name">Reason</div>
                         <div class="value">
                             <div class="input-group">
-                                {% render_field request_form.reason|attr:'required:true'  class="input--style-5"  %}
+                                <input type="text" name="reason" id="id_reason" required class="input--style-5">
                             </div>
                         </div>
                     </div>
@@ -74,7 +73,7 @@
                         <div class="name">Unit (in ml)</div>
                         <div class="value">
                             <div class="input-group">
-                                {% render_field request_form.unit|attr:'required:true'  class="input--style-5"  %}
+                                <input type="text" name="unit" id="id_unit" required class="input--style-5">
                             </div>
                         </div>
                     </div>
