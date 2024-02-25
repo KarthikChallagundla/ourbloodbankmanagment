@@ -13,7 +13,7 @@ class DonorUserForm(forms.ModelForm):
 class DonorForm(forms.ModelForm):
     class Meta:
         model=models.Donor
-        fields=['bloodgroup','address','mobile','profie_pic']
+        fields=['bloodgroup','address','mobile','profile_pic']
 
 class DonationForm(forms.ModelForm):
     class Meta:
