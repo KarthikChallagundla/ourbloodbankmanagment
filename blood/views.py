@@ -19,8 +19,7 @@ def is_patient(user):
 
 def afterlogin_view(request):
     if is_donor(request.user):      
-        return redirect('donor/donor-dashboard')
-                
+        return redirect('donor/donor-dashboard')           
     elif is_patient(request.user):
         return redirect('patient/patient-dashboard')
     else:

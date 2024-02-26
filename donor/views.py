@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from django.contrib.auth.models import Group
 from django.http import HttpResponseRedirect
-from . import forms
+from . import forms, models
+from blood import models as bmodels
+from blood import forms as bforms
 # Create your views here.
 
 def donor_signup_view(request):
@@ -21,10 +23,7 @@ def donor_signup_view(request):
             user.save()
             donor = donorForm.save(commit=False)
             donor.user = user
-            donor.age = donorForm.cleaned_data['age']
-            donor.disease = donorForm.cleaned_data['disease']
             donor.address = donorForm.cleaned_data['address']
-            donor.doctorname = donorForm.cleaned_data['doctorname']
             donor.mobile = donorForm.cleaned_data['mobile']
             donor.bloodgroup=donorForm.cleaned_data['bloodgroup']
             donor.save()
@@ -32,3 +31,14 @@ def donor_signup_view(request):
             my_donor_group[0].user_set.add(user)
         return HttpResponseRedirect('../donorlogin')
     return render(request, 'donor/donorsignup.html', context=mydict)
+
+def donor_dashboard_view(request):
+    donor = models.Donor.objects.get(user_id=request.user.id)
+    dict = {
+        'requestpending' : bmodels.BloodRequest.objects.all().filter(request_by_donor=donor).filter(status='Pending').count(),
+        'requestapproved' : bmodels.BloodRequest.objects.all().filter(request_by_donor=donor).filter(status='Approved').count(),
+        'requestmade' : bmodels.BloodRequest.objects.all().filter(request_by_donor=donor).count(),
+        'requestrejected' : bmodels.BloodRequest.objects.all().filter(request_by_donor=donor).filter(status='Rejected').count(),
+    }
+    return render(request,'donor/donor_dashboard.html',context=dict)
+
