@@ -1,5 +1,4 @@
 {%load static%}
-{% load widget_tweaks %}
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
@@ -38,7 +37,8 @@
                             <div class="value">
                                 <div class="input-group">
                                    
-                                    {% render_field form.username class="input--style-5"%}
+                                    <input type="text" name="username" class="input--style-5">
+
                      
                                 </div>
                             </div>
@@ -48,7 +48,8 @@
                             <div class="value">
                                 <div class="input-group">
                                     
-                                    {% render_field form.password class="input--style-5" %}
+                                    <input type="password" name="password" class="input--style-5">
+
                                 </div>
                             </div>
                         </div>
