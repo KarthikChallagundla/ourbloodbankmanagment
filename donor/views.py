@@ -68,7 +68,7 @@ def make_request_view(request):
             blood_request=request_form.save(commit=False)
             blood_request.bloodgroup=request_form.cleaned_data['bloodgroup']
             donor=models.Donor.objects.get(user_id=request.user.id)
-            blood_request.donor=donor
+            blood_request.request_by_donor=donor
             blood_request.save()
             return HttpResponseRedirect('../request-history')
     return render(request,'donor/makerequest.html', {'request_form':request_form})
