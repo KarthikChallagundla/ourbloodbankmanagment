@@ -42,3 +42,38 @@ def donor_dashboard_view(request):
     }
     return render(request,'donor/donor_dashboard.html',context=dict)
 
+def donate_blood_view(request):
+    donation_form=forms.DonationForm()
+    if request.method=='POST':
+        donation_form=forms.DonationForm(request.POST)
+        if donation_form.is_valid():
+            blood_donate=donation_form.save(commit=False)
+            blood_donate.bloodgroup=donation_form.cleaned_data['bloodgroup']
+            donor=models.Donor.objects.get(user_id=request.user.id)
+            blood_donate.donor=donor
+            blood_donate.save()
+            return HttpResponseRedirect('../donation-history')
+    return render(request, 'donor/donate_blood.html',{'donationform':donation_form})
+
+def donation_history_view(request):
+    donor=models.Donor.objects.get(user_id=request.user.id)
+    donations=models.BloodDonate.objects.all().filter(donor=donor)
+    return render(request, 'donor/donation_history.html', {'donations':donations})
+
+def make_request_view(request):
+    request_form=bforms.RequestForm()
+    if request.method=='POST':
+        request_form=bforms.RequestForm(request.POST)
+        if request_form.is_valid():
+            blood_request=request_form.save(commit=False)
+            blood_request.bloodgroup=request_form.cleaned_data['bloodgroup']
+            donor=models.Donor.objects.get(user_id=request.user.id)
+            blood_request.donor=donor
+            blood_request.save()
+            return HttpResponseRedirect('../request-history')
+    return render(request,'donor/makerequest.html', {'request_form':request_form})
+
+def request_history_view(request):
+    donor=models.Donor.objects.get(user_id=request.user.id)
+    blood_request=bmodels.BloodRequest.objects.all().filter(request_by_donor=donor)
+    return render(request, 'donor/request_history.html', {'blood_request':blood_request})
