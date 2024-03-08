@@ -1,6 +1,5 @@
 {% extends 'blood/adminbase.html' %}
 {% block content %}
-{% load widget_tweaks %}
 {%load static%}
 <head>
         <!-- Font special for pages-->
@@ -25,7 +24,7 @@
                         <div class="name">First Name</div>
                         <div class="value">
                             <div class="input-group">
-                                {% render_field userForm.first_name|attr:'required:true'  class="input--style-5"  %}
+                                <input type="text" name="first_name" required class="input--style-5">
                             </div>
                         </div>
                     </div>
@@ -34,7 +33,7 @@
                         <div class="name">Last Name</div>
                         <div class="value">
                             <div class="input-group">
-                                {% render_field userForm.last_name|attr:'required:true'  class="input--style-5"  %}
+                                <input type="text" name="last_name" required class="input--style-5">
                             </div>
                         </div>
                     </div>
@@ -43,7 +42,7 @@
                         <div class="name">Username</div>
                         <div class="value">
                             <div class="input-group">
-                                {% render_field userForm.username|attr:'required:true'  class="input--style-5"  %}
+                                <input type="text" name="username" required class="input--style-5">
                             </div>
                         </div>
                     </div>
@@ -52,7 +51,7 @@
                         <div class="name">Password</div>
                         <div class="value">
                             <div class="input-group">
-                                {% render_field userForm.password|attr:'required:true'  class="input--style-5"  %}
+                                <input type="password" name="password" required class="input--style-5">
                             </div>
                         </div>
                     </div>
@@ -61,7 +60,7 @@
                         <div class="name">Age</div>
                         <div class="value">
                             <div class="input-group">
-                                {% render_field patientForm.age|attr:'required:true'  class="input--style-5"  %}
+                                <input type="number" name="age" required class="input--style-5">
                             </div>
                         </div>
                     </div>
@@ -94,7 +93,7 @@
                         <div class="name">Disease(if any)</div>
                         <div class="value">
                             <div class="input-group">
-                                {% render_field patientForm.disease|attr:'required:true'  class="input--style-5"  %}
+                                <input type="text" name="disease" required class="input--style-5">
                             </div>
                         </div>
                     </div>
@@ -103,7 +102,7 @@
                         <div class="name">Doctor</div>
                         <div class="value">
                             <div class="input-group">
-                                {% render_field patientForm.doctorname|attr:'required:true'  class="input--style-5"  %}
+                                <input type="text" name="doctorname" required class="input--style-5">
                             </div>
                         </div>
                     </div>
@@ -112,7 +111,7 @@
                         <div class="name">Address</div>
                         <div class="value">
                             <div class="input-group">
-                                {% render_field patientForm.address|attr:'required:true'  class="input--style-5"  %}
+                                <input type="text" name="address" required class="input--style-5">
                             </div>
                         </div>
                     </div>
@@ -121,7 +120,7 @@
                         <div class="name">Mobile</div>
                         <div class="value">
                             <div class="input-group">
-                                {% render_field patientForm.mobile|attr:'required:true'  class="input--style-5"  %}
+                                <input type="text" name="mobile" required class="input--style-5">
                             </div>
                         </div>
                     </div>
@@ -130,7 +129,7 @@
                         <div class="name">Profile Pic</div>
                         <div class="value">
                             <div class="input-group">
-                                {% render_field patientForm.profile_pic|attr:'required:true'  class="input--style-5"  %}
+                                <input type="file" accept="image/*" name="profile_pic" required class="input--style-5">
                             </div>
                         </div>
                     </div>

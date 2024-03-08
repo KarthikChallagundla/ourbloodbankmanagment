@@ -31,7 +31,10 @@ urlpatterns = [
     path('adminlogin/', LoginView.as_view(template_name='blood/adminlogin.html'), name='adminlogin'),
     path('admin-dashboard/', views.admin_dashboard_view, name='admin-dashboard'),
     path('admin-blood/', views.admin_blood_view, name='admin-blood'),
-    path('admin-donor', views.admin_donor_view, name='admin-donor'),
+    path('admin-donor/', views.admin_donor_view, name='admin-donor'),
     path('update-donor/<int:id>', views.update_donor_view, name='update-donor'),
     path('delete-donor/<int:id>', views.delete_donor_view,name='delete-donor'),
+    path('admin-patient/', views.admin_patient_view, name='admin-patient'),
+    path('update-patient/<int:id>', views.update_patient_view, name='update-patient'),
+    path('delete-patient/<int:id>', views.delete_patient_view, name='delete-patient'),
 ]

@@ -7,6 +7,8 @@ from django.contrib.auth.models import User
 from . import forms, models
 from donor import models as dmodels
 from donor import forms as dforms
+from patient import models as pmodels
+from patient import forms as pforms
 
 # Create your views here.
 
@@ -139,3 +141,34 @@ def delete_donor_view(request,id):
     user.delete()
     donor.delete()
     return HttpResponseRedirect('/admin-donor')
+
+@login_required(login_url='adminlogin')
+def admin_patient_view(request):
+    patients=pmodels.Patient.objects.all()
+    return render(request, 'blood/admin_patient.html', {'patients' : patients})
+
+@login_required(login_url='adminlogin')
+def update_patient_view(request, id):
+    patient=pmodels.Patient.objects.get(id=id)
+    user=pmodels.User.objects.get(id=patient.user_id)
+    userForm=pforms.PatientUserForm(instance=user)
+    patientForm=pforms.PatientForm(request.FILES, instance=patient)
+    dict={'userForm':userForm, 'patientForm':patientForm}
+    if userForm.is_valid() and patientForm.is_valid():
+        user=userForm.save()
+        user.setpassword(user.password)
+        user.save()
+        patient=patientForm.save(commit=False)
+        patient.user=user
+        patient.bloodgroup=patientForm.cleaned_data['bloodgroup']
+        patient.save()
+        return HttpResponseRedirect('admin-patient')
+    return render(request, 'blood/update_patient.html', context=dict)
+
+@login_required(login_url='adminlogin')
+def delete_patient_view(request, id):
+    patient=pmodels.Patient.objects.get(id=id)
+    user=pmodels.User.objects.get(id=patient.user_id)
+    patient.delete()
+    user.delete()
+    return HttpResponseRedirect('/admin-patient')
