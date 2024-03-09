@@ -37,4 +37,7 @@ urlpatterns = [
     path('admin-patient/', views.admin_patient_view, name='admin-patient'),
     path('update-patient/<int:id>', views.update_patient_view, name='update-patient'),
     path('delete-patient/<int:id>', views.delete_patient_view, name='delete-patient'),
+    path('admin-donation/', views.admin_donation_view, name='admin-donation'),
+    path('approve-donation/<int:id>', views.approve_donation_view, name='approve-donation'),
+    path('reject-donation/<int:id>', views.reject_donation_view, name='reject-donation'),
 ]

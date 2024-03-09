@@ -172,3 +172,29 @@ def delete_patient_view(request, id):
     patient.delete()
     user.delete()
     return HttpResponseRedirect('/admin-patient')
+
+@login_required(login_url='adminlogin')
+def admin_donation_view(request):
+    donations=dmodels.BloodDonate.objects.all()
+    return render(request, 'blood/admin_donation.html', {'donations':donations})
+
+@login_required(login_url='adminlogin')
+def approve_donation_view(request, id):
+    donation=dmodels.BloodDonate.objects.get(id=id)
+    donation_blood_group=donation.bloodgroup
+    donation_blood_unit=donation.unit
+
+    stock=models.Stock.objects.get(bloodgroup=donation_blood_group)
+    stock.unit=stock.unit+donation_blood_unit
+    stock.save()
+
+    donation.status='Approved'
+    donation.save()
+    return HttpResponseRedirect('../admin-donation')
+
+@login_required(login_url='adminlogin')
+def reject_donation_view(request, id):
+    donation=dmodels.BloodDonate.objects.get(id=id)
+    donation.status='Rejected'
+    donation.save()
+    return HttpResponseRedirect('../admin-donation')
