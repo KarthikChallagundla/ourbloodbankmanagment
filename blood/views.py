@@ -198,3 +198,38 @@ def reject_donation_view(request, id):
     donation.status='Rejected'
     donation.save()
     return HttpResponseRedirect('../admin-donation')
+
+@login_required(login_url='adminlogin')
+def admin_request_view(request):
+    requests=models.BloodRequest.objects.all().filter(status='Pending')
+    return render(request, 'blood/admin_request.html', {'requests':requests})
+
+@login_required(login_url='adminlogin')
+def admin_request_history_view(request):
+    requests=models.BloodRequest.objects.all().exclude(status='Pending')
+    return render(request, 'blood/admin_request_history.html', {'requests':requests})
+
+@login_required(login_url='adminlogin')
+def update_approve_status_view(request, id):
+    req=models.BloodRequest.objects.get(id=id)
+    message=None
+    bloodgroup=req.bloodgroup
+    unit=req.unit
+    stock=models.Stock.objects.get(bloodgroup=bloodgroup)
+    if stock.unit > unit:
+        stock.unit = stock.unit - unit
+        stock.save()
+        req.status="Approved"
+    else:
+        message="Stock doesnot have enough blood only " + str(stock.unit) + " units are available"
+    req.save()
+
+    requests=models.BloodRequest.objects.all().filter(status='Pending')
+    return render(request, 'blood/admin_request.html', {'requests':requests , 'message':message})
+
+@login_required(login_url='adminlogin')
+def update_reject_status_view(request, id):
+    req=models.BloodRequest.objects.get(id=id)
+    req.status="Rejected"
+    req.save()
+    return HttpResponseRedirect('/admin-request')

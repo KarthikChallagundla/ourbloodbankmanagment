@@ -40,4 +40,8 @@ urlpatterns = [
     path('admin-donation/', views.admin_donation_view, name='admin-donation'),
     path('approve-donation/<int:id>', views.approve_donation_view, name='approve-donation'),
     path('reject-donation/<int:id>', views.reject_donation_view, name='reject-donation'),
+    path('admin-request', views.admin_request_view, name='admin-request'),
+    path('admin-request-history', views.admin_request_history_view, name='admin-request-history'),
+    path('update-approve-status/<int:id>', views.update_approve_status_view, name='update-approve-status'),
+    path('update-reject-status/<int:id>', views.update_reject_status_view, name='update-reject-status'),
 ]

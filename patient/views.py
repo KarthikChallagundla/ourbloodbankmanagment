@@ -13,7 +13,7 @@ def patient_signup_view(request):
     mydict={'userForm':userForm,'patientForm':patientForm}
     if request.method=='POST':
         userForm = forms.PatientUserForm(request.POST)
-        patientForm = forms.PatientForm(request.POST)
+        patientForm = forms.PatientForm(request.POST, request.FILES)
         if userForm.is_valid() and patientForm.is_valid():
             user = userForm.save()
             user.first_name = userForm.cleaned_data['first_name']
